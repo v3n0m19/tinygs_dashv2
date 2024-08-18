@@ -9,7 +9,7 @@
     "routes": [
       {
         "src": "/api/fetch-packets",
-        "dest": "/backend/index.js"
+        "dest": "/fetch-packets"
       }
     ]
   }
