@@ -5,12 +5,6 @@
         "src": "backend/index.js",
         "use": "@vercel/node"
       }
-    ],
-    "routes": [
-      {
-        "src": "/api/fetch-packets",
-        "dest": "/fetch-packets"
-      }
     ]
   }
   
