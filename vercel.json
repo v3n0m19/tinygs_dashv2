@@ -2,11 +2,11 @@
     "version": 2,
     "builds": [
       {
-        "src": "backend/",
+        "src": "backend/index.js",
         "use": "@vercel/node"
       }
     ],
-    "rewrites": [{ "source": "/api/(.*)", "destination": "/backend" }],
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/backend/index.js" }],
     "crons": [
       {
         "path": "/fetch-packets",
