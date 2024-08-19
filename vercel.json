@@ -13,7 +13,7 @@
     "rewrites": [{ "source": "/(.*)", "destination": "/backend" }],
     "crons": [
       {
-        "path": "/api/fetchAndStorePackets",
+        "path": "/fetchAndStorePackets",
         "schedule": "0 6 * * *"
       }
     ]
