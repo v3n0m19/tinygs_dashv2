@@ -14,7 +14,7 @@
     "crons": [
       {
         "path": "/api/fetchAndStorePackets",
-        "schedule": "*/5 * * * *"
+        "schedule": "0 6 * * *"
       }
     ]
   }
