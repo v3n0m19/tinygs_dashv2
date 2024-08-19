@@ -6,7 +6,7 @@
         "use": "@vercel/node"
       }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }],
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/backend" }],
     "crons": [
       {
         "path": "/fetch-packets",
