@@ -15,11 +15,5 @@
             "source": "/api/(.*)", 
             "destination": "/backend"
         }
-    ],
-    "crons": [
-      {
-        "path": "/fetch-packets",
-        "schedule": "0 6 * * *"
-      }
     ]
   }
