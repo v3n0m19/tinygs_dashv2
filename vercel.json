@@ -4,9 +4,23 @@
       {
         "src": "backend/index.js",
         "use": "@vercel/node"
+      },
+      {
+        "src": "frontend/package.json",
+        "use": "@vercel/static-build",
+        "config": { "distDir": "frontend/dist" }
       }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }],
+    "rewrites": [
+        { 
+            "source": "/api/(.*)", 
+            "destination": "/backend"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/frontend/$1"
+        }
+    ],
     "crons": [
       {
         "path": "/fetch-packets",
@@ -14,4 +28,3 @@
       }
     ]
   }
-  
