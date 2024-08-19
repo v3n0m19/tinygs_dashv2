@@ -4,8 +4,18 @@
       {
         "src": "backend/index.js",
         "use": "@vercel/node"
+      },
+      {
+        "src": "backend/fetchAndStorePackets.js",
+        "use": "@vercel/node"
       }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }]
+    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }],
+    "crons": [
+      {
+        "path": "/api/fetchAndStorePackets",
+        "schedule": "*/5 * * * *"
+      }
+    ]
   }
   
