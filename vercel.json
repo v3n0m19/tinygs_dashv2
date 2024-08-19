@@ -5,6 +5,17 @@
         "src": "backend/index.js",
         "use": "@vercel/node"
       }
-    ]
+    ],
+    "routes": [
+      {
+        "src": "/api/fetch-packets",
+        "dest": "/backend/index.js"
+      }
+    ],
+    "functions": {
+      "backend/index.js": {
+        "runtime": "nodejs20.x"
+      }
+    }
   }
   
