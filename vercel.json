@@ -1,1 +1,21 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/backend" }] }
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "backend/index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/fetch-packets",
+        "dest": "/backend"
+      }
+    ],
+    "functions": {
+      "backend/index.js": {
+        "runtime": "nodejs20.x"
+      }
+    }
+  }
+  
