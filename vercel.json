@@ -6,12 +6,7 @@
         "use": "@vercel/node"
       }
     ],
-    "rewrites": [{ "source": "/api/(.*)", "destination": "/backend/index.js" }],
-    "crons": [
-      {
-        "path": "/fetch-packets",
-        "schedule": "0 6 * * *"
-      }
-    ]
+    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }]
+    
   }
   
