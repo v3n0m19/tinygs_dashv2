@@ -10,7 +10,7 @@
         "use": "@vercel/static-build"
       }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/backend" }, { "source": "/(.*)", "destination": "/frontend/$1" }]
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/backend" }, { "source": "/(.*)", "destination": "/frontend/$1" }]
     
   }
   
