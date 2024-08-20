@@ -10,7 +10,7 @@ const fetchStationDetails = async () => {
 };
 
 const storePackets = async () => {
-  const response = await axios.get("http://localhost:5000/api/store-packets");//update before pushing to production
+  const response = await axios.get("/api/store-packets");//update before pushing to production
   return response.data;
 };
 
