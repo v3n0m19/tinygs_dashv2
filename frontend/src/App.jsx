@@ -10,7 +10,7 @@ const fetchStationDetails = async () => {
 };
 
 const storePackets = async () => {
-  const response = await axios.get("/api/store-packets");//update before pushing to production
+  const response = await axios.get("http://localhost:5000/api/store-packets");//update before pushing to production
   return response.data;
 };
 
@@ -60,26 +60,26 @@ function App() {
             {error && <p className="text-red-500">{error}</p>}
             {stationDetails ? (
               <pre className="whitespace-pre-wrap p-1 rounded-md">
-                <span className="text-[#55d1d9]">Name :</span>{" "}
+                <span className="text-[#55d1d9]">Name             :</span>{" "}
                 <span className="text-[#f096b0]">{stationDetails.name}</span>
                 <br />
-                <span className="text-[#55d1d9]">User ID :</span>{" "}
+                <span className="text-[#55d1d9]">User ID          :</span>{" "}
                 <span className="text-[#f096b0]">{stationDetails.userId}</span>
                 <br />
-                <span className="text-[#55d1d9]">Location :</span>{" "}
+                <span className="text-[#55d1d9]">Location         :</span>{" "}
                 <span className="text-[#f096b0]">
                   {stationDetails.location[0]}, {stationDetails.location[1]}
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Elevation :</span>{" "}
+                <span className="text-[#55d1d9]">Elevation        :</span>{" "}
                 <span className="text-[#f096b0]">
                   {stationDetails.elevation} meters
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Antenna :</span>{" "}
+                <span className="text-[#55d1d9]">Antenna          :</span>{" "}
                 <span className="text-[#f096b0]">{stationDetails.antenna}</span>
                 <br />
-                <span className="text-[#55d1d9]">Total Packets :</span>{" "}
+                <span className="text-[#55d1d9]">Total Packets    :</span>{" "}
                 <span className="text-[#f096b0]">
                   {stationDetails.confirmedPackets}
                 </span>
@@ -92,7 +92,7 @@ function App() {
                   )}
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Packets to Add :</span>{" "}
+                <span className="text-[#55d1d9]">Packets to Add   :</span>{" "}
                 <span className="text-[#f096b0]">{packetsToAdd}</span>
               </pre>
             ) : (
@@ -118,7 +118,7 @@ function App() {
         <div className="card card-compact bg-base-300 w-96 shadow-xl m-4">
           <figure>
             <img
-              src="src/assets/generic_low.jpg"
+              src="https://static.tinygs.com/satellites/generic_low.jpg"
               alt="Sat"
             />
           </figure>
