@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-// const dotenv = require('dotenv');
 
 const fetchStationDetails = async () => {
   const response = await axios.get(
@@ -11,7 +10,7 @@ const fetchStationDetails = async () => {
 };
 
 const storePackets = async () => {
-  const response = await axios.get("/api/store-packets");//update before pushing to production
+  const response = await axios.get("http://localhost:5000/api/store-packets");//update before pushing to production
   return response.data;
 };
 
@@ -82,14 +81,14 @@ function App() {
                 {stationDetails.confirmedPackets}
               </span>
               <br />
-              <span className="text-[#55d1d9]">Packets to Add   :</span>{" "}
-              <span className="text-[#f096b0]">
-                {packetsToAdd}
-              </span>
-              <br />
               <span className="text-[#55d1d9]">Last Packet Time :</span>{" "}
               <span className="text-[#f096b0]">
                 {new Date(stationDetails.lastPacketTime).toLocaleString()}
+              </span>
+              <br />
+              <span className="text-[#55d1d9]">Packets to Add   :</span>{" "}
+              <span className="text-[#f096b0]">
+                {packetsToAdd}
               </span>
             </pre>
           ) : (
