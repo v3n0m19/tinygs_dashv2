@@ -33,4 +33,4 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-module.exports = app; // Export the app for Vercel
+module.exports = app; 
