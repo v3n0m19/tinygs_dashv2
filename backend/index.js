@@ -4,7 +4,7 @@ const fetchAndStorePackets = require('./services/fetchAndStorePackets');
 const getPackets  = require('./services/fetchPacketsFromDB');
 
 const app = express();
-app.get('/', (req,res) => res.send("tinyGS-dash API"))
+// app.get('/', (req,res) => res.send("tinyGS-dash API"))
 app.get('/api/store-packets', async (req, res) => {
     await connectDB();
     const result = await fetchAndStorePackets();
