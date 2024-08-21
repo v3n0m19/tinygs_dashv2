@@ -20,5 +20,5 @@ const PacketSchema = new mongoose.Schema({
     },
     stationNumber: Number,
 });
-
+PacketSchema.index({ id: 1 });
 module.exports = mongoose.model('Packet', PacketSchema);

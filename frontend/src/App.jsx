@@ -9,10 +9,27 @@ const fetchStationDetails = async () => {
   return response.data;
 };
 
+// Function to fetch packets from TinyGS and store them in the database
 const storePackets = async () => {
-  const response = await axios.get("http://localhost:5000/api/store-packets");//update before pushing to production
-  return response.data;
+  try {
+    const fetchResponse = await axios.get("http://localhost:5000/api/fetch-packets-tinygs");
+    
+    if (fetchResponse.data.newPackets.length === 0) {
+      console.log('No new packets to store.');
+      return { success: true, message: 'No new packets to store.' };
+    }
+
+    const storeResponse = await axios.post("http://localhost:5000/api/store-packets-db", {
+      packets: fetchResponse.data.newPackets
+    });
+
+    return storeResponse.data;
+  } catch (error) {
+    console.error('Failed to fetch and store packets:', error.message);
+    return { success: false, error: error.message };
+  }
 };
+
 
 function App() {
   const [stationDetails, setStationDetails] = useState(null);
@@ -51,8 +68,8 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-row">
-        <div className="card card-compact bg-base-300 w-96 shadow-xl px-2 py-4 m-4">
+      <div className="flex flex-row justify-stretch">
+        <div className="card card-compact bg-base-300 w-96 shadow-xl px-2 py-4 m-4 mx-5 grow">
           <div className="card-title justify-left">
             {stationDetails ? (
               stationDetails.status === 1 ? (
@@ -77,7 +94,7 @@ function App() {
                 </>
               )
             ) : (
-              <span class="loading loading-dots loading-md mx-5"></span>
+              <span className="loading loading-dots loading-md mx-5"></span>
             )}
           </div>
           <div className="card-body">
@@ -139,7 +156,7 @@ function App() {
           </div>
         </div>
 
-        <div className="card card-compact bg-base-300 w-96 shadow-xl m-4">
+        <div className="card card-compact bg-base-300 w-96 shadow-xl m-4 mx-5 mr-10 grow">
           <figure>
             <img
               src="https://static.tinygs.com/satellites/generic_low.jpg"
@@ -153,7 +170,7 @@ function App() {
           </div>
         </div>
         
-        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none">
+        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none  grow">
           <div className="stat">
             <div className="stat-title">NORAD</div>
             <div className="stat-value text-blue-300">{modemConfig.NORAD}</div>
@@ -169,7 +186,7 @@ function App() {
             <div className="stat-value text-blue-300">{modemConfig.mode}</div>
           </div>
         </div>
-        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none">
+        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow">
           <div className="stat">
             <div className="stat-title">Spreading Factor</div>
             <div className="stat-value text-blue-300">{modemConfig.sf}MHz</div>
@@ -185,7 +202,7 @@ function App() {
             <div className="stat-value text-blue-300">{modemConfig.cr}</div>
           </div>
         </div>
-        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none">
+        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow">
           <div className="stat">
             <div className="stat-title">Syncword</div>
             <div className="stat-value text-blue-300">
@@ -207,7 +224,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none">
+        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none mr-4 grow">
           <div className="stat">
             <div className="stat-title">TX Power</div>
             <div className="stat-value text-blue-300">
@@ -227,6 +244,7 @@ function App() {
             </div>
           </div>
         </div>
+
       </div>
     </>
   );
