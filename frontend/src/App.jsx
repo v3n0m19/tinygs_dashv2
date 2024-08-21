@@ -5,6 +5,7 @@ import "./App.css";
 import StationCard from "./components/StationCard";
 import SatelliteCard from "./components/SatelliteCard";
 import ConfigTable from "./components/ConfigTable";
+import NavBar from "./components/NavBar";
 
 const fetchStationDetails = async () => {
   const response = await axios.get(
@@ -16,14 +17,14 @@ const fetchStationDetails = async () => {
 // Function to fetch packets from TinyGS and store them in the database
 const storePackets = async () => {
   try {
-    const fetchResponse = await axios.get("http://localhost:5000/api/fetch-packets-tinygs");
+    const fetchResponse = await axios.get("/api/fetch-packets-tinygs");
     
     if (fetchResponse.data.newPackets.length === 0) {
       console.log('No new packets to store.');
       return { success: true, message: 'No new packets to store.' };
     }
 
-    const storeResponse = await axios.post("http://localhost:5000/api/store-packets-db", {
+    const storeResponse = await axios.post("/api/store-packets-db", {
       packets: fetchResponse.data.newPackets
     });
 
@@ -40,7 +41,31 @@ function App() {
   const [packetsToAdd, setPacketsToAdd] = useState(0);
   const [lastPacketCount, setLastPacketCount] = useState(0);
   const [error, setError] = useState(null);
+  const [time, setTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
+      setTime({ hours, minutes, seconds });
+    };
+
+    const interval = setInterval(updateTime, 1000);
+
+    // Initialize the clock immediately
+    updateTime();
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  },[]);
+ 
   const fetchData = async () => {
     try {
       const data = await fetchStationDetails();
@@ -72,6 +97,9 @@ function App() {
 
   return (
     <>
+      <NavBar
+        time={time}
+      />
       <div className="flex flex-row justify-stretch">
         <StationCard
           stationDetails={stationDetails}

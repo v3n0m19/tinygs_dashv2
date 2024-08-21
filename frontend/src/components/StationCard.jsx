@@ -33,40 +33,40 @@ const StationCard = ({ stationDetails, packetsToAdd,fetchData, handleStorePacket
             {error && <p className="text-red-500">{error}</p>}
             {stationDetails ? (
               <pre className="whitespace-pre-wrap p-1 rounded-md">
-                <span className="text-[#55d1d9]">Name :</span>{" "}
-                <span className="text-[#f096b0]">{stationDetails.name}</span>
+                <span className="text-info">Name                :</span>{" "}
+                <span className="text-secondary">{stationDetails.name}</span>
                 <br />
-                <span className="text-[#55d1d9]">User ID :</span>{" "}
-                <span className="text-[#f096b0]">{stationDetails.userId}</span>
+                <span className="text-info">User ID             :</span>{" "}
+                <span className="text-secondary">{stationDetails.userId}</span>
                 <br />
-                <span className="text-[#55d1d9]">Location :</span>{" "}
-                <span className="text-[#f096b0]">
+                <span className="text-info">Location            :</span>{" "}
+                <span className="text-secondary">
                   {stationDetails.location[0]}, {stationDetails.location[1]}
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Elevation :</span>{" "}
-                <span className="text-[#f096b0]">
+                <span className="text-info">Elevation           :</span>{" "}
+                <span className="text-secondary">
                   {stationDetails.elevation} meters
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Antenna :</span>{" "}
-                <span className="text-[#f096b0]">{stationDetails.antenna}</span>
+                <span className="text-info">Antenna             :</span>{" "}
+                <span className="text-secondary">{stationDetails.antenna}</span>
                 <br />
-                <span className="text-[#55d1d9]">Total Packets :</span>{" "}
-                <span className="text-[#f096b0]">
+                <span className="text-info">Total Packets       :</span>{" "}
+                <span className="text-secondary">
                   {stationDetails.confirmedPackets}
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Last Packet Time :</span>{" "}
-                <span className="text-[#f096b0]">
+                <span className="text-info">Last Packet Time    :</span>{" "}
+                <span className="text-secondary">
                   {new Date(stationDetails.lastPacketTime).toLocaleString(
                     "en-IN",
                     { hour12: false }
                   )}
                 </span>
                 <br />
-                <span className="text-[#55d1d9]">Packets to Add :</span>{" "}
-                <span className="text-[#f096b0]">{packetsToAdd}</span>
+                <span className="text-info">Packets to Add      :</span>{" "}
+                <span className="text-secondary">{packetsToAdd}</span>
               </pre>
             ) : (
               <span className="loading loading-spinner loading-lg mx-36 my-10"></span>
