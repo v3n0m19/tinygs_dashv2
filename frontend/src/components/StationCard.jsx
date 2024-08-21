@@ -33,31 +33,31 @@ const StationCard = ({ stationDetails, packetsToAdd,fetchData, handleStorePacket
             {error && <p className="text-red-500">{error}</p>}
             {stationDetails ? (
               <pre className="whitespace-pre-wrap p-1 rounded-md">
-                <span className="text-info">Name                :</span>{" "}
+                <span className="text-info">Name              :</span>{" "}
                 <span className="text-secondary">{stationDetails.name}</span>
                 <br />
-                <span className="text-info">User ID             :</span>{" "}
+                <span className="text-info">User ID           :</span>{" "}
                 <span className="text-secondary">{stationDetails.userId}</span>
                 <br />
-                <span className="text-info">Location            :</span>{" "}
+                <span className="text-info">Location          :</span>{" "}
                 <span className="text-secondary">
                   {stationDetails.location[0]}, {stationDetails.location[1]}
                 </span>
                 <br />
-                <span className="text-info">Elevation           :</span>{" "}
+                <span className="text-info">Elevation         :</span>{" "}
                 <span className="text-secondary">
                   {stationDetails.elevation} meters
                 </span>
                 <br />
-                <span className="text-info">Antenna             :</span>{" "}
+                <span className="text-info">Antenna           :</span>{" "}
                 <span className="text-secondary">{stationDetails.antenna}</span>
                 <br />
-                <span className="text-info">Total Packets       :</span>{" "}
+                <span className="text-info">Total Packets     :</span>{" "}
                 <span className="text-secondary">
                   {stationDetails.confirmedPackets}
                 </span>
                 <br />
-                <span className="text-info">Last Packet Time    :</span>{" "}
+                <span className="text-info">Last Packet Time  :</span>{" "}
                 <span className="text-secondary">
                   {new Date(stationDetails.lastPacketTime).toLocaleString(
                     "en-IN",
@@ -65,7 +65,7 @@ const StationCard = ({ stationDetails, packetsToAdd,fetchData, handleStorePacket
                   )}
                 </span>
                 <br />
-                <span className="text-info">Packets to Add      :</span>{" "}
+                <span className="text-info">Packets to Add    :</span>{" "}
                 <span className="text-secondary">{packetsToAdd}</span>
               </pre>
             ) : (

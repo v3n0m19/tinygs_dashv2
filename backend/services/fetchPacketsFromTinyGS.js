@@ -2,7 +2,7 @@
 const axios = require('axios');
 const Packet = require('../models/Packet');
 
-const BATCH_SIZE = 20; // Adjust batch size as needed
+const BATCH_SIZE = 30; // Adjust batch size as needed
 
 const fetchPacketsFromTinyGS = async () => {
     try {

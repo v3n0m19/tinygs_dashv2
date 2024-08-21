@@ -14,6 +14,14 @@ const fetchStationDetails = async () => {
   return response.data;
 };
 
+const fetchModemConfig = async (satelliteName) => {
+  const response = await axios.get(
+    `/api/fetch-sat?name=${satelliteName}`
+  );
+  const modemConfigData = response.data.configurations[0]; // Extract the first configuration
+  return modemConfigData;
+};
+
 // Function to fetch packets from TinyGS and store them in the database
 const storePackets = async () => {
   try {
@@ -35,9 +43,9 @@ const storePackets = async () => {
   }
 };
 
-
 function App() {
   const [stationDetails, setStationDetails] = useState(null);
+  const [modemConfig, setModemConfig] = useState({});
   const [packetsToAdd, setPacketsToAdd] = useState(0);
   const [lastPacketCount, setLastPacketCount] = useState(0);
   const [error, setError] = useState(null);
@@ -65,11 +73,16 @@ function App() {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   },[]);
- 
+
   const fetchData = async () => {
     try {
       const data = await fetchStationDetails();
       setStationDetails(data);
+
+      if (data.satellite) {
+        const modemConfigData = await fetchModemConfig(data.satellite);
+        setModemConfig(modemConfigData);
+      }
 
       if (lastPacketCount !== 0) {
         setPacketsToAdd(data.confirmedPackets - lastPacketCount);
@@ -92,8 +105,6 @@ function App() {
   useEffect(() => {
     fetchData(); // Fetch data on component mount
   }, []);
-
-  const modemConfig = stationDetails ? JSON.parse(stationDetails.modem_conf) : {};
 
   return (
     <>
