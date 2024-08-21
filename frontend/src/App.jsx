@@ -6,6 +6,7 @@ import StationCard from "./components/StationCard";
 import SatelliteCard from "./components/SatelliteCard";
 import ConfigTable from "./components/ConfigTable";
 import NavBar from "./components/NavBar";
+import PacketChart from "./components/PacketChart";
 
 const fetchStationDetails = async () => {
   const response = await axios.get(
@@ -87,7 +88,10 @@ function App() {
       if (lastPacketCount !== 0) {
         setPacketsToAdd(data.confirmedPackets - lastPacketCount);
       }
+
+      setError(null);
     } catch (err) {
+      console.log("Error fetching station details:", err);
       setError("Error fetching station details");
     }
   };
@@ -97,7 +101,10 @@ function App() {
       await storePackets();
       setLastPacketCount(stationDetails.confirmedPackets);
       setPacketsToAdd(0); // Reset the difference after storing packets
+
+      setError(null);
     } catch (err) {
+      console.log("Error storing packets:",);
       setError("Error storing packets");
     }
   };
@@ -110,7 +117,7 @@ function App() {
     <>
       <NavBar
         time={time}
-      />
+      />  
       <div className="flex flex-row justify-stretch">
         <StationCard
           stationDetails={stationDetails}
@@ -125,6 +132,9 @@ function App() {
         <ConfigTable
           modemConfig={modemConfig}
         />
+      </div>
+      <div className="flex flex-row justify-stretch">
+      <PacketChart />
       </div>
     </>
   );

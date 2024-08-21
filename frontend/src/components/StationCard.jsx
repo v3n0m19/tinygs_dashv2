@@ -1,7 +1,7 @@
 import React from 'react';
 
 const StationCard = ({ stationDetails, packetsToAdd,fetchData, handleStorePackets,error }) => (
-    <div className="card card-compact bg-base-300 w-96 shadow-xl px-2 py-4 m-4 mx-5 grow">
+    <div className="card card-compact w-96 bg-base-300 shadow-xl px-2 py-4 m-4 mx-5 grow"> 
           <div className="card-title justify-left">
             {stationDetails ? (
               stationDetails.status === 1 ? (
