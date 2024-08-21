@@ -10,7 +10,7 @@ const fetchStationDetails = async () => {
 };
 
 const storePackets = async () => {
-  const response = await axios.get("/api/store-packets");//update before pushing to production
+  const response = await axios.get("http://localhost:5000/api/store-packets");//update before pushing to production
   return response.data;
 };
 
@@ -71,6 +71,7 @@ function App() {
                     type="radio"
                     name="radio-4"
                     className="radio radio-error m-4"
+                    defaultChecked
                   />
                   <h1 className="text-4xl text-error">Offline</h1>
                 </>
@@ -147,24 +148,22 @@ function App() {
           </figure>
           <div className="card-body justify-center">
             <h1 className="card-title justify-center text-2xl text-blue-300">
-              {modemConfig.sat}
+              {stationDetails ? stationDetails.satellite : "Unknown"}
             </h1>
           </div>
         </div>
-
-        <div className="stats stats-vertical bg-base-300 shadow my-4 ml-4 rounded-none">
+        
+        <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none">
           <div className="stat">
             <div className="stat-title">NORAD</div>
             <div className="stat-value text-blue-300">{modemConfig.NORAD}</div>
           </div>
-
           <div className="stat">
             <div className="stat-title">Frequency</div>
             <div className="stat-value text-blue-300">
               {modemConfig.freq}MHz
             </div>
           </div>
-
           <div className="stat">
             <div className="stat-title">Mode</div>
             <div className="stat-value text-blue-300">{modemConfig.mode}</div>

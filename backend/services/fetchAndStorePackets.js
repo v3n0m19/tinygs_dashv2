@@ -28,7 +28,6 @@ const fetchAndStorePackets = async () => {
                 console.log(`Packet ${packetData.id} saved.`);
             } else {
                 console.log(`Packet ${packetData.id} already exists.`);
-                break; //breaks out of the loop as soon as a packet that already exists is found
             }
         }
 
