@@ -1,10 +1,8 @@
-/* App.css */
-.react-calendar-heatmap {
-    width: 100%;
-    height: auto;
-  }
-.react-calendar-heatmap .color-scale-1 { fill: #d6e685; }
-.react-calendar-heatmap .color-scale-2 { fill: #8cc665; }
-.react-calendar-heatmap .color-scale-3 { fill: #44a340; }
-.react-calendar-heatmap .color-scale-4 { fill: #1e6823; }
-.react-calendar-heatmap .color-empty { fill: #000000; }
+.react-calendar-heatmap .color-scale-0 { fill: #000; }  /* Very dark teal */
+.react-calendar-heatmap .color-scale-1 { fill: #00332e; }  /* Very dark teal */
+.react-calendar-heatmap .color-scale-2 { fill: #004d40; }  /* Dark teal */
+.react-calendar-heatmap .color-scale-3 { fill: #00695c; }  /* Deep teal */
+.react-calendar-heatmap .color-scale-4 { fill: #00796b; }  /* Medium teal */
+.react-calendar-heatmap .color-scale-5 { fill: #009688; }  /* Bright teal */
+.react-calendar-heatmap .color-scale-6 { fill: #26a69a; }  /* Light teal */
+.react-calendar-heatmap .color-scale-7 { fill: #4db6ac; }  /* Very light teal */

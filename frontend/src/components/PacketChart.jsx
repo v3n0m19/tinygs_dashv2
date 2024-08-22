@@ -46,7 +46,7 @@ function PacketChart() {
           <XAxis dataKey="name" angle={-45} textAnchor="end" interval={0} height={60} />
           <YAxis />
           <Tooltip
-            contentStyle={{ backgroundColor: '#333', borderRadius: '8px', color: '#fff' }}
+            contentStyle={{ backgroundColor: '#091319', borderRadius: '8px', color: '#fff' ,opacity: '0.8'}}
             itemStyle={{ color: '#fff' }}
           />
           <Bar
