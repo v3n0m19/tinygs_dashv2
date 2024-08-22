@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
-const fetchAndStorePackets = require('./services/fetchAndStorePackets');
 const getPackets  = require('./services/fetchPacketsFromDB');
 const fetchPacketsFromTinyGS = require('./services/fetchPacketsFromTinyGS');
 const storePacketsToDB = require('./services/storePacketsToDB');
@@ -44,11 +43,6 @@ app.post('/api/store-packets-db', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
-  
-app.get('/api/store-packets', async (req, res) => {
-    const result = await fetchAndStorePackets();
-    res.json(result);
-});
 app.get('/api/fetch-packets', async (req, res) => {
     try {
       const packets = await getPackets();

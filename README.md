@@ -82,14 +82,14 @@ Start the frontend server
 
 #### Fetch all your captured packets from TinyGS
 
-```http
+```
   GET /api/fetch-packets-tinyGS
 ```
 
 
 #### Store the captured packets to  MongoDB
 
-```http
+```
   POST /api/store-packets-tinyGS
 ```
 
@@ -100,13 +100,13 @@ Start the frontend server
 
 #### Fetch all stored packets from MongoDB
 
-```http
+```
   GET /api/fetch-packets
 ```
 
 #### Fetch packets for a specific satellite
 
-```http
+```
   GET /api/fetch-packet?name=GaoFen
 ```
 
@@ -117,19 +117,19 @@ Start the frontend server
 
 #### Store all your sat data in MongoDB
 
-```http
+```
   GET /api/store-sats
 
 ```
 #### Fetch all satellite data from MongoDB
 
-```http
+```
   GET /api/fetch-packets
 ```
 
 #### Fetch satellite data for a specific satellite
 
-```http
+```
   GET /api/fetch-sat?name=GaoFen
 ```
 
