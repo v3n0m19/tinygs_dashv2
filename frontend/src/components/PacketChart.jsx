@@ -9,7 +9,7 @@ function PacketChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/fetch-sats");
+        const response = await axios.get("http://localhost:5000/api/fetch-sats");
         const filteredData = response.data
           .filter(sat => sat.noOfPackets > 0) // Only include satellites with packets > 0
           .map(sat => ({
@@ -35,11 +35,11 @@ function PacketChart() {
   };
 
   return (
-    <div className ="card  card-compact bg-base-300 mx-4 my-4 pt-4 grow" style={{ width: '47%', height: '450px' }}>
+    <div className ="card  card-compact bg-base-300 mx-4 my-4 grow" style={{ width: '47%', height: '450px' }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
-          margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
+          margin={{ top: 20, right: 30, left: 10, bottom: 100 }}
           onMouseLeave={handleMouseLeave}
         >
           <CartesianGrid strokeDasharray="3 3" />

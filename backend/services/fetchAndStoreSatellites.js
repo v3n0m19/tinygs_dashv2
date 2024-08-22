@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Satellite = require('../models/Satellite');
+const Packet = require('../models/Packet');
 
 const fetchAndStoreSatellites = async () => {
     try {
@@ -25,12 +26,15 @@ const fetchAndStoreSatellites = async () => {
             NORAD: config.NORAD || 0,
             filter: config.filter || []
           }));
-    
+          
+          const packet_no = await Packet.countDocuments({ satellite: satellite.name })
+
           return Satellite.updateOne(
             { name: satellite.name },
             { 
               displayName: satellite.displayName,
-              configurations: configurations
+              configurations: configurations,
+              noOfPackets: packet_no
             },
             { upsert: true }
           );

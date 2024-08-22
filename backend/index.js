@@ -9,6 +9,7 @@ const storePacketsToDB = require('./services/storePacketsToDB');
 const fetchAndStoreSatellites = require('./services/fetchAndStoreSatellites');
 const fetchSatellitesFromDB = require('./services/fetchSatellitesFromDB');
 const fetchSatellite = require('./services/fetchSatellite');
+const fetchPackets = require('./services/fetchPackets');
 
 const app = express();
 app.use(cors());
@@ -22,7 +23,7 @@ connectDB().then(() => {
 });
 
 app.get('/api/', (req,res) => res.send("tinyGS-dash API"))
-app.get('/api/store-sat', async (req, res) => {
+app.get('/api/store-sats', async (req, res) => {
     try {
       const result = await fetchAndStoreSatellites();
       res.json(result);
@@ -64,6 +65,24 @@ app.get('/api/fetch-packets', async (req, res) => {
       res.status(500).send({ error: error.message });
     }
   });
+  app.get('/api/fetch-packet', async (req, res) => {
+    const { name } = req.query;
+    if (!name) {
+        return res.status(400).json({ success: false, message: 'Satellite name is required.' });
+      }
+    try {
+      const packets = await fetchPackets(name);
+  
+      if (!packets) {
+        return res.status(404).json({ message: 'Packets not found' });
+      }
+  
+      res.json(packets);
+    } catch (error) {
+      console.error('Error fetching Packets data:', error.message);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
   app.get('/api/fetch-sat', async (req, res) => {
     const { name } = req.query;
     if (!name) {
@@ -82,6 +101,7 @@ app.get('/api/fetch-packets', async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
