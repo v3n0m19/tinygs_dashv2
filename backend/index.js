@@ -9,6 +9,8 @@ const fetchAndStoreSatellites = require('./services/fetchAndStoreSatellites');
 const fetchSatellitesFromDB = require('./services/fetchSatellitesFromDB');
 const fetchSatellite = require('./services/fetchSatellite');
 const fetchPackets = require('./services/fetchPackets');
+const updateStatistics = require('./services/updateStatistics');
+const getStatisticsForLastMonths = require('./services/getStatisticsForLastMonths');
 
 const app = express();
 app.use(cors());
@@ -22,6 +24,22 @@ connectDB().then(() => {
 });
 
 app.get('/api/', (req,res) => res.send("tinyGS-dash API"))
+app.get('/api/fetch-statistics', async (req, res) => {
+    try {
+      const statistics = await getStatisticsForLastMonths(4); 
+      res.json(statistics);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+app.get('/api/update-statistics', async (req, res) => {
+    try {
+      await updateStatistics();
+      res.status(200).send('Statistics updated successfully.');
+    } catch (error) {
+      res.status(500).send('Error updating statistics.');
+    }
+  });
 app.get('/api/store-sats', async (req, res) => {
     try {
       const result = await fetchAndStoreSatellites();

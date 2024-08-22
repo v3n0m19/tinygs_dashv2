@@ -7,6 +7,7 @@ import SatelliteCard from "./components/SatelliteCard";
 import ConfigTable from "./components/ConfigTable";
 import NavBar from "./components/NavBar";
 import PacketChart from "./components/PacketChart";
+import PacketHeatMap from "./components/PacketHeatMap";
 
 const fetchStationDetails = async () => {
   const response = await axios.get(
@@ -17,7 +18,7 @@ const fetchStationDetails = async () => {
 
 const fetchModemConfig = async (satelliteName) => {
   const response = await axios.get(
-    `http://localhost:5000/api/fetch-sat?name=${satelliteName}`
+    `/api/fetch-sat?name=${satelliteName}`
   );
   const modemConfigData = response.data.configurations[0]; // Extract the first configuration
   return modemConfigData;
@@ -26,14 +27,14 @@ const fetchModemConfig = async (satelliteName) => {
 // Function to fetch packets from TinyGS and store them in the database
 const storePackets = async () => {
   try {
-    const fetchResponse = await axios.get("http://localhost:5000/api/fetch-packets-tinygs");
+    const fetchResponse = await axios.get("/api/fetch-packets-tinygs");
     
     if (fetchResponse.data.newPackets.length === 0) {
       console.log('No new packets to store.');
       return { success: true, message: 'No new packets to store.' };
     }
 
-    const storeResponse = await axios.post("http://localhost:5000/api/store-packets-db", {
+    const storeResponse = await axios.post("/api/store-packets-db", {
       packets: fetchResponse.data.newPackets
     });
 
@@ -133,9 +134,11 @@ function App() {
           modemConfig={modemConfig}
         />
       </div>
-      <div className="flex flex-row justify-stretch">
+      <div className="flex flex-row justify-stretch h-1/3">
       <PacketChart />
+      <PacketHeatMap/>
       </div>
+
     </>
   );
 }
