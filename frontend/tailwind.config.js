@@ -10,14 +10,7 @@ export default {
     },
   },
   daisyui: {
-    themes: [{
-      winter:{...require("daisyui/src/theming/themes")["winter"],
-      accent1: "#c148ac",
-    
-    },sunset:{...require("daisyui/src/theming/themes")["sunset"],
-    accent1: "#9878d9",  
-  }
-  }],
+    themes: ["sunset","winter"],
   },
   plugins: [require('daisyui'),],
 }
