@@ -6,7 +6,7 @@ const BATCH_SIZE = 30; // Adjust batch size as needed
 
 const fetchPacketsFromTinyGS = async () => {
     try {
-        const response = await axios.get(`${process.env.TINYGS_API}`);
+        const response = await axios.get("https://api.tinygs.com/v2/packets?station=ROXX_LoRa@731332067");
         const packets = response.data.packets;
 
         if (!packets || packets.length === 0) {

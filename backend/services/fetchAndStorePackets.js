@@ -6,7 +6,7 @@ const fetchAndStorePackets = async () => {
     let noOfNewPackets = 0;
 
     try {
-        const response = await axios.get(`${process.env.TINYGS_API}`);
+        const response = await axios.get("https://api.tinygs.com/v2/packets?station=ROXX_LoRa@731332067");
         const packets = response.data.packets;
 
         if (!packets || packets.length === 0) {
