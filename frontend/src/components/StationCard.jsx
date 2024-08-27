@@ -1,20 +1,17 @@
 import React from "react";
 import axios from "axios";
 
-const storePackets = async () => {
+const storePackets = async (packets) => {
   try {
-    const fetchResponse = await axios.get("/api/fetch-packets-tinygs");
-    
-    if (fetchResponse.data.newPackets.length === 0) {
+    if (packets.length === 0) {
       console.log('No new packets to store.');
       return { success: true, message: 'No new packets to store.' };
     }
+    const storeResponse = await axios.post("/api/store-packets-db", {
+      packets
+    });
 
-    // const storeResponse = await axios.post("http://localhost:5455/api/store-packets-db", {
-    //   packets: fetchResponse.data.newPackets
-    // });
-
-    // return storeResponse.data;
+    return storeResponse.data;
   } catch (error) {
     console.error('Failed to fetch and store packets:', error.message);
     return { success: false, error: error.message };
@@ -24,17 +21,18 @@ const storePackets = async () => {
 const StationCard = ({
   stationDetails,
   fetchData,
+  backgroundPackets,
+  noOfPackets,
   error,
   setError,
 }) => {
 
   const handleStorePackets = async () => {
     try {
-      await storePackets();
-
+      await storePackets(backgroundPackets);
       setError(null);
     } catch (err) {
-      console.log("Error storing packets:",);
+      console.log("Error storing packets:", err);
       setError("Error storing packets");
     }
   };
@@ -73,35 +71,40 @@ const StationCard = ({
         {error && <p className="text-red-500">{error}</p>}
         {stationDetails ? (
           <pre className="whitespace-pre-wrap p-1 rounded-md">
-            <span className="text-info">Name :</span>{" "}
+            <span className="text-info">Name              :</span>{" "}
             <span className="text-secondary">{stationDetails.name}</span>
             <br />
-            <span className="text-info">User ID :</span>{" "}
+            <span className="text-info">User ID           :</span>{" "}
             <span className="text-secondary">{stationDetails.userId}</span>
             <br />
-            <span className="text-info">Location :</span>{" "}
+            <span className="text-info">Location          :</span>{" "}
             <span className="text-secondary">
               {stationDetails.location[0]}, {stationDetails.location[1]}
             </span>
             <br />
-            <span className="text-info">Elevation :</span>{" "}
+            <span className="text-info">Elevation         :</span>{" "}
             <span className="text-secondary">
               {stationDetails.elevation} meters
             </span>
             <br />
-            <span className="text-info">Antenna :</span>{" "}
+            <span className="text-info">Antenna           :</span>{" "}
             <span className="text-secondary">{stationDetails.antenna}</span>
             <br />
-            <span className="text-info">Total Packets :</span>{" "}
+            <span className="text-info">Total Packets     :</span>{" "}
             <span className="text-secondary">
               {stationDetails.confirmedPackets}
             </span>
             <br />
-            <span className="text-info">Last Packet Time :</span>{" "}
+            <span className="text-info">Last Packet Time  :</span>{" "}
             <span className="text-secondary">
               {new Date(stationDetails.lastPacketTime).toLocaleString("en-IN", {
                 hour12: false,
               })}
+            </span>
+            <br />
+            <span className="text-info">Packets to Store  :</span>{" "}
+            <span className="text-secondary">
+              {noOfPackets}
             </span>
           </pre>
         ) : (

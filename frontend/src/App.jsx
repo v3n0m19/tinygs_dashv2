@@ -42,10 +42,22 @@ const updateStatistics = async () => {
   }
 };
 
+const fetchBackgroundPackets = async () => {
+  try {
+    const response = await axios.get("/api/fetch-packets-tinygs");
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch packets:', error.message);
+    return { noOfPackets: 0, newPackets: [] };
+  }
+};
+
 function App() {
   const [stationDetails, setStationDetails] = useState(null);
   const [modemConfig, setModemConfig] = useState({});
   const [error, setError] = useState(null);
+  const [backgroundPackets, setBackgroundPackets] = useState([]);
+  const [noOfPackets, setNoOfPackets] = useState(0);
   const [time, setTime] = useState({
     days: 0,
     hours: 0,
@@ -89,10 +101,21 @@ function App() {
     }
   };
 
-
   useEffect(() => {
     fetchData(); 
   }, []);
+  
+  useEffect(() => {
+    const fetchPackets = async () => {
+      const data = await fetchBackgroundPackets();
+      setBackgroundPackets(data.newPackets);
+      setNoOfPackets(data.noOfPackets);
+    };
+
+    fetchPackets(); // Fetch packets in the background
+  }, []);
+
+
 
   return (
     <>
@@ -103,6 +126,8 @@ function App() {
         <StationCard
           stationDetails={stationDetails}
           fetchData={fetchData}
+          backgroundPackets={backgroundPackets}
+          noOfPackets={noOfPackets} 
           error={error}
           setError={setError}
         />

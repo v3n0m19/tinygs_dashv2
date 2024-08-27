@@ -1,7 +1,8 @@
 import React from "react";
-
-const ConfigTable = ({ modemConfig }) => (
-  <>
+const ConfigTable = ({ modemConfig }) => {
+  
+return (  
+<>
     <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none  grow">
       <div className="stat">
         <div className="stat-title">NORAD</div>
@@ -68,6 +69,6 @@ const ConfigTable = ({ modemConfig }) => (
         <div className="stat-value text-blue-300">{modemConfig.gain} dB</div>
       </div>
     </div>
-  </>
-);
+  </>)
+};
 export default ConfigTable;
