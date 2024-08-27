@@ -22,7 +22,9 @@ const satelliteSchema = new mongoose.Schema({
   name: { type: String, required: true },
   displayName: { type: String, required: true },
   configurations: [configurationSchema],
-  noOfPackets: { type: Number, default: 0 }
+  noOfPackets: { type: Number, default: 0 },
+  image: { type: String, default: '' },  
+  tle: { type: [String], default: [] } 
 });
 
 const Satellite = mongoose.model('Satellite', satelliteSchema);

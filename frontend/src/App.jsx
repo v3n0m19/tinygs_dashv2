@@ -100,7 +100,7 @@ function App() {
       setError("Error fetching station details");
     }
   };
-
+  
   useEffect(() => {
     fetchData(); 
   }, []);

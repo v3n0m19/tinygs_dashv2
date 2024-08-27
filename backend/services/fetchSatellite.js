@@ -5,13 +5,13 @@ const fetchSatellite = async (name) => {
     const satellite = await Satellite.findOne({ name: name });
 
     if (!satellite) {
-      return null; // Return null if no satellite is found
+      return null; 
     }
 
-    return satellite; // Return the satellite document
+    return satellite; 
   } catch (error) {
     console.error('Failed to fetch satellite by name:', error.message);
-    throw new Error('Internal Server Error'); // Throw a generic error for the API layer
+    throw new Error('Internal Server Error');
   }
 };
 
