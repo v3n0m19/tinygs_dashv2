@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css'; // Ensure default styles are included
 import { Tooltip as ReactTooltip } from 'react-tooltip'
+import axios from 'axios';
 
 const PacketHeatMap = () => {
   const [data, setData] = useState([]);
@@ -10,13 +11,9 @@ const PacketHeatMap = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/fetch-statistics');
+        const response = await axios.get('/api/fetch-statistics');
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const transformedData = await response.json();
+        const transformedData = response.data;
 
         const latestDate = new Date(Math.max(...transformedData.map(entry => new Date(entry.date))));
 

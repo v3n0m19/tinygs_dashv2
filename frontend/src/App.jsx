@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-
 import StationCard from "./components/StationCard";
 import SatelliteCard from "./components/SatelliteCard";
 import ConfigTable from "./components/ConfigTable";
@@ -20,36 +19,32 @@ const fetchModemConfig = async (satelliteName) => {
   const response = await axios.get(
     `/api/fetch-sat?name=${satelliteName}`
   );
-  const modemConfigData = response.data.configurations[0]; // Extract the first configuration
+  const modemConfigData = response.data.configurations[0]; 
   return modemConfigData;
 };
 
-// Function to fetch packets from TinyGS and store them in the database
-const storePackets = async () => {
+const updateSatellites = async () => {
   try {
-    const fetchResponse = await axios.get("/api/fetch-packets-tinygs");
-    
-    if (fetchResponse.data.newPackets.length === 0) {
-      console.log('No new packets to store.');
-      return { success: true, message: 'No new packets to store.' };
-    }
-
-    const storeResponse = await axios.post("/api/store-packets-db", {
-      packets: fetchResponse.data.newPackets
-    });
-
-    return storeResponse.data;
+    await axios.get("/api/update-sats");
+    console.log("Satellites updated successfully.");
   } catch (error) {
-    console.error('Failed to fetch and store packets:', error.message);
-    return { success: false, error: error.message };
+    console.error("Error updating satellites:", error);
+  }
+};
+
+
+const updateStatistics = async () => {
+  try {
+    await axios.get("/api/update-statistics");
+    console.log("statistics updated successfully.");
+  } catch (error) {
+    console.error("Error updating statistics:", error);
   }
 };
 
 function App() {
   const [stationDetails, setStationDetails] = useState(null);
   const [modemConfig, setModemConfig] = useState({});
-  const [packetsToAdd, setPacketsToAdd] = useState(0);
-  const [lastPacketCount, setLastPacketCount] = useState(0);
   const [error, setError] = useState(null);
   const [time, setTime] = useState({
     days: 0,
@@ -70,24 +65,21 @@ function App() {
 
     const interval = setInterval(updateTime, 1000);
 
-    // Initialize the clock immediately
     updateTime();
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    return () => clearInterval(interval); 
   },[]);
 
   const fetchData = async () => {
     try {
+      await updateSatellites();
+      await updateStatistics();
       const data = await fetchStationDetails();
       setStationDetails(data);
 
       if (data.satellite) {
         const modemConfigData = await fetchModemConfig(data.satellite);
         setModemConfig(modemConfigData);
-      }
-
-      if (lastPacketCount !== 0) {
-        setPacketsToAdd(data.confirmedPackets - lastPacketCount);
       }
 
       setError(null);
@@ -97,21 +89,9 @@ function App() {
     }
   };
 
-  const handleStorePackets = async () => {
-    try {
-      await storePackets();
-      setLastPacketCount(stationDetails.confirmedPackets);
-      setPacketsToAdd(0); // Reset the difference after storing packets
-
-      setError(null);
-    } catch (err) {
-      console.log("Error storing packets:",);
-      setError("Error storing packets");
-    }
-  };
 
   useEffect(() => {
-    fetchData(); // Fetch data on component mount
+    fetchData(); 
   }, []);
 
   return (
@@ -122,10 +102,9 @@ function App() {
       <div className="flex flex-row justify-stretch">
         <StationCard
           stationDetails={stationDetails}
-          packetsToAdd={packetsToAdd}
           fetchData={fetchData}
-          handleStorePackets={handleStorePackets}
           error={error}
+          setError={setError}
         />
         <SatelliteCard
           stationDetails={stationDetails}

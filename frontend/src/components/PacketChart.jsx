@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import axios from "axios";
 
-function PacketChart() {
+const PacketChart = () => {
   const [data, setData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
 

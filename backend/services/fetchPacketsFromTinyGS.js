@@ -1,8 +1,5 @@
-// backend/services/fetchPacketsFromTinyGS.js
 const axios = require('axios');
 const Packet = require('../models/Packet');
-
-const BATCH_SIZE = 30; // Adjust batch size as needed
 
 const fetchPacketsFromTinyGS = async () => {
     try {
@@ -11,42 +8,28 @@ const fetchPacketsFromTinyGS = async () => {
 
         if (!packets || packets.length === 0) {
             console.log('No new packets found.');
-            return { newPackets: [] };
+            return { noOfPackets: 0, newPackets: [] };
         }
+
+        const latestPacket = await Packet.findOne().sort({ serverTime: -1 }).lean().select('serverTime');
+        const latestTimestamp = latestPacket ? latestPacket.serverTime : 0;
 
         const newPackets = [];
-        const packetBatches = [];
 
-        // Split packets into batches
-        for (let i = 0; i < packets.length; i += BATCH_SIZE) {
-            packetBatches.push(packets.slice(i, i + BATCH_SIZE));
+        for (const packet of packets) {
+            if (packet.serverTime > latestTimestamp) {
+                newPackets.push(packet);
+            } else {
+                break;
+            }
         }
 
-        // Process each batch
-        for (const batch of packetBatches) {
-            const checks = batch.map(async (packet) => {
-                const { parsed, ...packetData } = packet;
-
-                // Use findOne with projection to optimize query
-                const existingPacket = await Packet.findOne({ id: packetData.id }).lean().select('_id');
-
-                if (!existingPacket) {
-                    newPackets.push(packetData);
-                    console.log(`Packet ${packetData.id} is new and will be returned.`);
-                } else {
-                    console.log(`Packet ${packetData.id} already exists and will be skipped.`);
-                }
-            });
-
-            // Run all checks concurrently
-            await Promise.all(checks);
-        }
-
-        return { newPackets };
+        // Return the result
+        return { noOfPackets: newPackets.length, newPackets };
 
     } catch (error) {
         console.error('Failed to fetch packets:', error.message);
-        return { newPackets: [], error: error.message };
+        return { noOfPackets: 0, newPackets: [], error: error.message };
     }
 };
 

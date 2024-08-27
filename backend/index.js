@@ -11,6 +11,7 @@ const fetchSatellite = require('./services/fetchSatellite');
 const fetchPackets = require('./services/fetchPackets');
 const updateStatistics = require('./services/updateStatistics');
 const getStatisticsForLastMonths = require('./services/getStatisticsForLastMonths');
+const updateSatellites = require('./services/updateSatellites');
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,105 @@ connectDB().then(() => {
 });
 
 app.get('/api/', (req,res) => res.send("tinyGS-dash API"))
+
+
+//satellite calls
+
+app.get('/api/store-sats', async (req, res) => {
+  try {
+    const result = await fetchAndStoreSatellites();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/update-sats', async (req, res) => {
+  const result = await updateSatellites();
+  if (result.success) {
+      res.status(200).json(result);
+  } else {
+      res.status(500).json(result);
+  }
+});
+
+app.get('/api/fetch-sat', async (req, res) => {
+  const { name } = req.query;
+  if (!name) {
+      return res.status(400).json({ success: false, message: 'Satellite name is required.' });
+    }
+  try {
+    const satellite = await fetchSatellite(name);
+
+    if (!satellite) {
+      return res.status(404).json({ message: 'Satellite not found' });
+    }
+
+    res.json(satellite);
+  } catch (error) {
+    console.error('Error fetching satellite data:', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/fetch-sats', async (req, res) => {
+  try {
+    const satellites = await fetchSatellitesFromDB();
+    res.json(satellites);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+
+
+//packet calls
+
+app.get('/api/fetch-packets-tinygs', async (req, res) => {
+  const result = await fetchPacketsFromTinyGS();
+  res.json(result);
+});
+app.post('/api/store-packets-db', async (req, res) => {
+  try {
+    const { packets } = req.body;
+    const result = await storePacketsToDB(packets);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+app.get('/api/fetch-packets', async (req, res) => {
+  try {
+    const packets = await getPackets();
+    res.json(packets);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+app.get('/api/fetch-packet', async (req, res) => {
+  const { name } = req.query;
+  if (!name) {
+      return res.status(400).json({ success: false, message: 'Satellite name is required.' });
+    }
+  try {
+    const packets = await fetchPackets(name);
+
+    if (!packets) {
+      return res.status(404).json({ message: 'Packets not found' });
+    }
+
+    res.json(packets);
+  } catch (error) {
+    console.error('Error fetching Packets data:', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+
+//statistics calls
+
 app.get('/api/fetch-statistics', async (req, res) => {
     try {
       const statistics = await getStatisticsForLastMonths(4); 
@@ -35,84 +135,14 @@ app.get('/api/fetch-statistics', async (req, res) => {
 app.get('/api/update-statistics', async (req, res) => {
     try {
       await updateStatistics();
-      res.status(200).send('Statistics updated successfully.');
+      res.status(200).json({message:'Statistics updated successfully.'});
     } catch (error) {
-      res.status(500).send('Error updating statistics.');
+      res.status(500).json({message:'Error updating statistics.'});
     }
   });
-app.get('/api/store-sats', async (req, res) => {
-    try {
-      const result = await fetchAndStoreSatellites();
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-app.get('/api/fetch-packets-tinygs', async (req, res) => {
-    const result = await fetchPacketsFromTinyGS();
-    res.json(result);
-});
-app.post('/api/store-packets-db', async (req, res) => {
-    try {
-      const { packets } = req.body;
-      const result = await storePacketsToDB(packets);
-      res.json(result);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-app.get('/api/fetch-packets', async (req, res) => {
-    try {
-      const packets = await getPackets();
-      res.json(packets);
-    } catch (error) {
-      res.status(500).send({ error: error.message });
-    }
-  });
-  app.get('/api/fetch-sats', async (req, res) => {
-    try {
-      const satellites = await fetchSatellitesFromDB();
-      res.json(satellites);
-    } catch (error) {
-      res.status(500).send({ error: error.message });
-    }
-  });
-  app.get('/api/fetch-packet', async (req, res) => {
-    const { name } = req.query;
-    if (!name) {
-        return res.status(400).json({ success: false, message: 'Satellite name is required.' });
-      }
-    try {
-      const packets = await fetchPackets(name);
+
+
   
-      if (!packets) {
-        return res.status(404).json({ message: 'Packets not found' });
-      }
-  
-      res.json(packets);
-    } catch (error) {
-      console.error('Error fetching Packets data:', error.message);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  });
-  app.get('/api/fetch-sat', async (req, res) => {
-    const { name } = req.query;
-    if (!name) {
-        return res.status(400).json({ success: false, message: 'Satellite name is required.' });
-      }
-    try {
-      const satellite = await fetchSatellite(name);
-  
-      if (!satellite) {
-        return res.status(404).json({ message: 'Satellite not found' });
-      }
-  
-      res.json(satellite);
-    } catch (error) {
-      console.error('Error fetching satellite data:', error.message);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  });
 
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 5455;
