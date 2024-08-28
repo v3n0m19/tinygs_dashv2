@@ -2,8 +2,8 @@ import React from "react";
 const ConfigTable = ({ modemConfig }) => {
   
 return (  
-<>
-    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none  grow">
+<div className="join grow">
+    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-2xl  grow join-item">
       <div className="stat">
         <div className="stat-title">NORAD</div>
         <div className="stat-value text-blue-300">{modemConfig.NORAD}</div>
@@ -17,7 +17,7 @@ return (
         <div className="stat-value text-blue-300">{modemConfig.mode}</div>
       </div>
     </div>
-    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow">
+    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow join-item">
       <div className="stat">
         <div className="stat-title">Spreading Factor</div>
         <div className="stat-value text-blue-300">{modemConfig.sf}MHz</div>
@@ -33,7 +33,7 @@ return (
         <div className="stat-value text-blue-300">{modemConfig.cr}</div>
       </div>
     </div>
-    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow">
+    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none grow join-item">
       <div className="stat">
         <div className="stat-title">Syncword</div>
         <div className="stat-value text-blue-300">
@@ -53,7 +53,7 @@ return (
         <div className="stat-value text-blue-300">{modemConfig.pl} symbols</div>
       </div>
     </div>
-    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-none mr-4 grow">
+    <div className="stats stats-vertical bg-base-300 shadow my-4 rounded-2xl mr-4 grow join-item">
       <div className="stat">
         <div className="stat-title">TX Power</div>
         <div className="stat-value text-blue-300">{modemConfig.pwr} dBm</div>
@@ -69,6 +69,6 @@ return (
         <div className="stat-value text-blue-300">{modemConfig.gain} dB</div>
       </div>
     </div>
-  </>)
+  </div>)
 };
 export default ConfigTable;
