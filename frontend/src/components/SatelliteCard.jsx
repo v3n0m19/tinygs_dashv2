@@ -3,7 +3,7 @@ import axios from "axios";
 import SatelliteTracker from "./SatelliteTracker";
 
 const globeOptions = {
-  globeImageUrl: "/proxy-image",
+  globeImageUrl: "/api/proxy-image",
   pathColor: "rgba(0, 255, 0, 0.7)",
   pointColor: "yellow",
   backgroundColor: "#091319"

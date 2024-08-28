@@ -27,7 +27,7 @@ connectDB().then(() => {
 
 app.get('/api/', (req,res) => res.send("tinyGS-dash API"))
 
-app.get('/proxy-image', async (req, res) => {
+app.get('/api/proxy-image', async (req, res) => {
   try {
     const response = await axios.get('https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74218/world.200412.3x5400x2700.jpg', {
       responseType: 'stream'
