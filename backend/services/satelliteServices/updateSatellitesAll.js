@@ -1,7 +1,7 @@
-const Satellite = require('../models/Satellite');
-const Packet = require('../models/Packet');
+const Satellite = require('../../models/Satellite');
+const Packet = require('../../models/Packet');
 
-const updateSatellites = async () => {
+const updateSatellitesAll = async () => {
     try {
         const packetCounts = await Packet.aggregate([
             {
@@ -28,4 +28,4 @@ const updateSatellites = async () => {
     }
 };
 
-module.exports = updateSatellites;
+module.exports = updateSatellitesAll;

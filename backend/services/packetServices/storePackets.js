@@ -1,6 +1,6 @@
-const Packet = require('../models/Packet');
+const Packet = require('../../models/Packet');
 
-const storePacketsToDB = async (packets) => {
+const storePackets = async (packets) => {
 
     try {
         if (!packets || packets.length === 0) {
@@ -21,4 +21,4 @@ const storePacketsToDB = async (packets) => {
     }
 };
 
-module.exports = storePacketsToDB;
+module.exports = storePackets;

@@ -1,6 +1,6 @@
 const axios = require('axios');
-const Satellite = require('../models/Satellite');
-const fetchSatellitesFromDB = async ()=>{
+const Satellite = require('../../models/Satellite');
+const fetchSatellitesAll = async ()=>{
     try {
         const satellites = await Satellite.find({});
         return satellites;
@@ -9,4 +9,4 @@ const fetchSatellitesFromDB = async ()=>{
       }
     
 };
-module.exports = fetchSatellitesFromDB;
+module.exports = fetchSatellitesAll;

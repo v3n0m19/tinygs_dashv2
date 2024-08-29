@@ -1,8 +1,7 @@
-// services/statisticsService.js
 
-const Statistics = require('../models/Statistics');
+const Statistics = require('../../models/Statistics');
 
-const getStatisticsForLastMonths = async (months = 4) => {
+const fetchStatistics = async (months = 4) => {
   try {
     const dateThreshold = new Date(new Date().setMonth(new Date().getMonth() - months));
     
@@ -25,4 +24,4 @@ const getStatisticsForLastMonths = async (months = 4) => {
   }
 };
 
-module.exports =getStatisticsForLastMonths;
+module.exports =fetchStatistics;

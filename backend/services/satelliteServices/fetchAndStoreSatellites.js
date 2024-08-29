@@ -1,6 +1,6 @@
 const axios = require('axios');
-const Satellite = require('../models/Satellite');
-const Packet = require('../models/Packet');
+const Satellite = require('../../models/Satellite');
+const Packet = require('../../models/Packet');
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const fetchAndStoreSatellites = async () => {

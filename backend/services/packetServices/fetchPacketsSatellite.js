@@ -1,6 +1,6 @@
-const Packet = require('../models/Packet');
+const Packet = require('../../models/Packet');
 
-const fetchPackets = async (name) => {
+const fetchPacketsSatellite = async (name) => {
   try {
     const packets = await Packet.find({ satellite: name });
 
@@ -15,4 +15,4 @@ const fetchPackets = async (name) => {
   }
 };
 
-module.exports = fetchPackets;
+module.exports = fetchPacketsSatellite;

@@ -1,7 +1,7 @@
 const axios = require('axios');
-const Packet = require('../models/Packet');
+const Packet = require('../../models/Packet');
 
-const fetchPacketsFromTinyGS = async () => {
+const fetchPacketsTinyGS = async () => {
     try {
         const response = await axios.get("https://api.tinygs.com/v2/packets?station=ROXX_LoRa@731332067");
         const packets = response.data.packets;
@@ -24,7 +24,6 @@ const fetchPacketsFromTinyGS = async () => {
             }
         }
 
-        // Return the result
         return { noOfPackets: newPackets.length, newPackets };
 
     } catch (error) {
@@ -33,4 +32,4 @@ const fetchPacketsFromTinyGS = async () => {
     }
 };
 
-module.exports = fetchPacketsFromTinyGS;
+module.exports = fetchPacketsTinyGS;

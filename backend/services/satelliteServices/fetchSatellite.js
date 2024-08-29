@@ -1,4 +1,4 @@
-const Satellite = require('../models/Satellite');
+const Satellite = require('../../models/Satellite');
 
 const fetchSatellite = async (name) => {
   try {
